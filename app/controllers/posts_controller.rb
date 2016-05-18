@@ -1,7 +1,10 @@
 class PostsController < ApplicationController
+  http_basic_authenticate_with :name => "dhh", :password => "secret", :except => [:index, :show]
+
   # GET /posts
   # GET /posts.json
   def index
+
     @posts = Post.all
 
     respond_to do |format|
@@ -81,3 +84,23 @@ class PostsController < ApplicationController
     end
   end
 end
+
+class CommentsController < ApplicationController
+  http_basic_authenticate_with :name => "dhh", :password => "secret", :only => :destroy
+
+  def create
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.create(params[:comment])
+    redirect_to post_path(@post)
+  end
+
+  def destroy
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
+    @comment.destroy
+    redirect_to post_path(@post)
+  end
+
+end
+
+
