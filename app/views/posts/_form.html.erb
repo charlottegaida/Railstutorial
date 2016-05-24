@@ -1,5 +1,5 @@
 <% @post.tags.build %>
-<%= form_for(@post) do |post_form| %>
+<%= simple_form_for(@post) do |post_form| %>
     <% if @post.errors.any? %>
         <div id="errorExplanation">
           <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -12,16 +12,13 @@
     <% end %>
 
     <div class="field">
-      <%= post_form.label :name %><br />
-      <%= post_form.text_field :name %>
+      <%= post_form.input :name %>
     </div>
     <div class="field">
-      <%= post_form.label :title %><br />
-      <%= post_form.text_field :title %>
+      <%= post_form.input :title %>
     </div>
     <div class="field">
-      <%= post_form.label :content %><br />
-      <%= post_form.text_area :content %>
+      <%= post_form.input :content %>
     </div>
     <h2>Tags</h2>
     <%= render :partial => 'tags/form',
@@ -30,3 +27,4 @@
       <%= post_form.submit %>
     </div>
 <% end %>
+
